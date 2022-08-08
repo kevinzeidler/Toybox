@@ -1,0 +1,10 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=12fdbf3a_002D3c0a_002D4eb9_002Dbd36_002D463dfc3fc648/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="All tests from Solution" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;Solution /&gt;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=9abcbc55_002D5bfb_002D410c_002Da7f5_002D5b2859850e88/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="OutlineData" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;TestAncestor&gt;
+    &lt;TestId&gt;xUnit::393C1257-9CB7-444B-A78D-85A33E36AC6A::net6.0::DemoApp.Tests.CellTest.OutlineData&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::393C1257-9CB7-444B-A78D-85A33E36AC6A::net6.0::DemoApp.Tests.GameTest.HasBoardProperty&lt;/TestId&gt;
+  &lt;/TestAncestor&gt;
+&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

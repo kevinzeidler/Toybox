@@ -57,7 +57,7 @@ public class Game
         return sb.ToString();
     }
 
-    public boolean hasWon(char player)
+    public bool hasWon(char player)
     {
         for (int i = 0; i < 9; i++)
         for (int j = 0; j < 9; j++)
