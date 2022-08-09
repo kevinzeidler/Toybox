@@ -1,6 +1,3 @@
-using System.Text;
-using Xunit;
-
 namespace ToyBox.Tests;
 
 public class GameTest
@@ -16,15 +13,15 @@ public class GameTest
 
         // assert
         Assert.Equal(9, gameBoard.Length);
-        Assert.Equal(' ', gameBoard[0]);
-        Array.ForEach(gameBoard, (x) => Assert.Equal(' ', x));
+        Assert.Equal(gameBoard.Empty, gameBoard[0]);
+        //Array.ForEach(gameBoard, (x) => Assert.Equal(gameBoard.Empty, x));
     }
 
     [Fact]
     public void HasStringRepresentation()
     {
         var game = new Game();
-        
+
         var stringRepr = game.ToString();
 
         Assert.Equal("   \n   \n   \n", stringRepr);

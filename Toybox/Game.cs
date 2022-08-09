@@ -5,108 +5,116 @@ namespace ToyBox;
 
 public class Game
 {
-    public int turnNumber;
+    private static readonly Random random = new();
+
+    private readonly int[] MagicSquare3X3Ints = { 6, 1, 8, 7, 5, 3, 2, 9, 4 };
+
+    // public int Value { get; set; }
+    //
+    public Board board;
+
+    // Originally I implemented this as a `Guid` instance, but invoking `Guid()` returns a zeroed-out identifier
+    // that definitely isn't unique. I'm guessing there's probably a documentation page that explains everything,
+    // but let's get this working first with a basic randomly-generated string then maybe consider using a more
+    // appropriate data type 
+    public string SessionId;
+
+    public Game()
+    {
+        board = new Board();
+        SessionId = RandomString(16);
+    }
+
+    public Game(Context prevState)
+    {
+        board = new Board(prevState.BoardState);
+        SessionId = prevState.SessionId;
+    }
+
+    public int turnNumber => board.TurnNumber;
 
     public char CurrentPlayer
     {
         get
         {
             if (turnNumber % 2 == 0)
-            {
                 return 'X';
-            }
-            else
-            {
-                return 'O';
-            }
+            return 'O';
         }
     }
 
-    private readonly int[] MagicSquare3X3Ints = new[] { 6, 1, 8, 7, 5, 3, 2, 9, 4 };
-
-    // public int Value { get; set; }
-    //
-    public char[] board;
-
-    public Game()
+    public Context GameState
     {
-        board = new char[] { ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' };
-        turnNumber = 0;
+        get
+        {
+            var victoryConditions = HasWinner();
+            var context = new Context(SessionId, board.state, 1, CurrentPlayer,
+                victoryConditions.Item1, victoryConditions.Item2,
+                victoryConditions.Item3, victoryConditions.Item4);
+            return context;
+        }
     }
 
-    public Game(char[] newBoard)
+    public static string RandomString(int length)
     {
-        board = newBoard;
-        turnNumber = 0;
+        const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        return new string(Enumerable.Repeat(chars, length)
+            .Select(s => s[random.Next(s.Length)]).ToArray());
+    }
+
+    public bool CanGo(int index)
+    {
+        return GameState.HasNextMove && board[index] == board.Empty;
     }
 
     public string MakeMove(int index)
     {
-        board[index] = CurrentPlayer;
-        turnNumber += 1;
+        if (CanGo(index)) board[index] = CurrentPlayer;
+
         var boardState = ToString();
         Console.WriteLine(boardState);
         return boardState;
     }
 
-    // public int GameState
-    // {
-    //     get
-    //     {
-    //         var wi
-    //         var winX = hasWon('X');
-    //         var winO = hasWon('O');
-    //         var winEither = winX || winO;
-    //         var stalemate = !winEither && turnNumber >= 8;
-    //         var inProgress = 
-    //         
-    //
-    //     }
-    // }
     public override string ToString()
     {
         var sb = new StringBuilder();
         for (var i = 1; i <= board.Length; i++)
         {
             sb.Append(board[i - 1]);
-            if (i > 0 && i % 3 == 0)
-            {
-                sb.Append('\n');
-            }
+            if (i > 0 && i % 3 == 0) sb.Append('\n');
         }
 
         var boardString = sb.ToString();
         var victoryConditions = HasWinner();
         var context = new Context
         {
-            BoardState = board,
+            SessionId = SessionId,
+            BoardState = board.state,
             GameState = 1,
             CurrentPlayer = CurrentPlayer,
-            HasWinner = victoryConditions.Item1,
-            Winner = victoryConditions.Item2,
-            WinningSquares = victoryConditions.Item3,
-            HasNextMove = victoryConditions.Item4
-            
-            
+            HasWinner = victoryConditions.hasWinner,
+            Winner = victoryConditions.winner,
+            WinningSquares = victoryConditions.winningSquares,
+            HasNextMove = victoryConditions.hasNextMove
         };
-        string jsonString = JsonSerializer.Serialize(context);
+        var jsonString = JsonSerializer.Serialize(context);
 
         return jsonString;
     }
 
-    public (bool, char?, int[]?, bool) HasWinner()
+    private (bool hasWinner, char? winner, int[]? winningSquares, bool hasNextMove) HasWinner()
     {
-        
-        for (int i = 0; i < 9; i++)
-        for (int j = 0; j < 9; j++)
-        for (int k = 0; k < 9; k++)
-            if (i != j && i != k && j != k)
-                if (board[i] == board[j] && board[j] == board[k] && board[i] != ' ')
-                    if (MagicSquare3X3Ints[i] + MagicSquare3X3Ints[j] + MagicSquare3X3Ints[k] == 15)
-                    {
-                        var winningSquares = new int[] { i, j, j };
-                        return (true, board[i], winningSquares, false);
-                    }
+        for (var i = 0; i < 9; i++)
+            for (var j = 0; j < 9; j++)
+                for (var k = 0; k < 9; k++)
+                    if (i != j && i != k && j != k)
+                        if (board[i] == board[j] && board[j] == board[k] && board[i] != ' ')
+                            if (MagicSquare3X3Ints[i] + MagicSquare3X3Ints[j] + MagicSquare3X3Ints[k] == 15)
+                            {
+                                var winningSquares = new[] { i, j, k };
+                                return (true, board[i], winningSquares, false);
+                            }
 
         var hasNextMove = turnNumber <= board.Length;
         return (false, null, null, hasNextMove);
