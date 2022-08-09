@@ -1,4 +1,5 @@
 using System.Text;
+using System.Text.Json;
 
 namespace ToyBox;
 
@@ -44,9 +45,24 @@ public class Game
         board[index] = CurrentPlayer;
         turnNumber += 1;
         var boardState = ToString();
+        Console.WriteLine(boardState);
         return boardState;
     }
 
+    // public int GameState
+    // {
+    //     get
+    //     {
+    //         var wi
+    //         var winX = hasWon('X');
+    //         var winO = hasWon('O');
+    //         var winEither = winX || winO;
+    //         var stalemate = !winEither && turnNumber >= 8;
+    //         var inProgress = 
+    //         
+    //
+    //     }
+    // }
     public override string ToString()
     {
         var sb = new StringBuilder();
@@ -59,18 +75,40 @@ public class Game
             }
         }
 
-        return sb.ToString();
+        var boardString = sb.ToString();
+        var victoryConditions = HasWinner();
+        var context = new Context
+        {
+            BoardState = board,
+            GameState = 1,
+            CurrentPlayer = CurrentPlayer,
+            HasWinner = victoryConditions.Item1,
+            Winner = victoryConditions.Item2,
+            WinningSquares = victoryConditions.Item3,
+            HasNextMove = victoryConditions.Item4
+            
+            
+        };
+        string jsonString = JsonSerializer.Serialize(context);
+
+        return jsonString;
     }
 
-    public bool hasWon(char player)
+    public (bool, char?, int[]?, bool) HasWinner()
     {
+        
         for (int i = 0; i < 9; i++)
         for (int j = 0; j < 9; j++)
         for (int k = 0; k < 9; k++)
             if (i != j && i != k && j != k)
-                if (board[i] == player && board[j] == player && board[k] == player)
+                if (board[i] == board[j] && board[j] == board[k] && board[i] != ' ')
                     if (MagicSquare3X3Ints[i] + MagicSquare3X3Ints[j] + MagicSquare3X3Ints[k] == 15)
-                        return true;
-        return false;
+                    {
+                        var winningSquares = new int[] { i, j, j };
+                        return (true, board[i], winningSquares, false);
+                    }
+
+        var hasNextMove = turnNumber <= board.Length;
+        return (false, null, null, hasNextMove);
     }
 }
