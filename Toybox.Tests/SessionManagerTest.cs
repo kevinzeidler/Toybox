@@ -31,11 +31,11 @@ public class SessionManagerTest
         Assert.Null(gameState.WinningSquares);
 
         var gameStatePostVictory = sessionManager.UpdateGame(sess1, 6);
-        Assert.True(gameState.HasWinner);
-        Assert.False(gameState.HasNextMove);
-        Assert.Equal('X', gameState.CurrentPlayer);
-        Assert.Equal('O', gameState.Winner);
-        Assert.Equal(new int[] { 2, 4, 6 }, gameState.WinningSquares);
+        Assert.True(gameStatePostVictory.HasWinner);
+        Assert.False(gameStatePostVictory.HasNextMove);
+        Assert.Equal('X', gameStatePostVictory.CurrentPlayer);
+        Assert.Equal('O', gameStatePostVictory.Winner);
+        Assert.Equal(new int[] { 2, 4, 6 }, gameStatePostVictory.WinningSquares);
         
     }
 
