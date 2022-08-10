@@ -11,6 +11,7 @@ public class Context
     public Context(string sessionId, char[] boardState, int gameState, char? currentPlayer, bool hasWinner,
         char? winner, int[]? winningSquares, bool hasNextMove)
     {
+        SessionId = sessionId;
         BoardState = boardState;
         GameState = gameState;
         CurrentPlayer = currentPlayer;

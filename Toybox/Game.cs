@@ -47,10 +47,19 @@ public class Game
     {
         get
         {
+            var sb = new StringBuilder();
+            for (var i = 1; i <= board.Length; i++)
+            {
+                sb.Append(board[i - 1]);
+                if (i > 0 && i % 3 == 0) sb.Append('\n');
+            }
+
+            
+            var boardString = sb.ToString();
             var victoryConditions = HasWinner();
-            var context = new Context(SessionId, board.state, 1, CurrentPlayer,
-                victoryConditions.Item1, victoryConditions.Item2,
-                victoryConditions.Item3, victoryConditions.Item4);
+            var context = new Context(sessionId: SessionId, boardState: board.state, 1, currentPlayer: CurrentPlayer,
+                hasWinner: victoryConditions.hasWinner, winner: victoryConditions.winner,
+                winningSquares: victoryConditions.winningSquares, hasNextMove: victoryConditions.hasNextMove);
             return context;
         }
     }
@@ -78,28 +87,7 @@ public class Game
 
     public override string ToString()
     {
-        var sb = new StringBuilder();
-        for (var i = 1; i <= board.Length; i++)
-        {
-            sb.Append(board[i - 1]);
-            if (i > 0 && i % 3 == 0) sb.Append('\n');
-        }
-
-        var boardString = sb.ToString();
-        var victoryConditions = HasWinner();
-        var context = new Context
-        {
-            SessionId = SessionId,
-            BoardState = board.state,
-            GameState = 1,
-            CurrentPlayer = CurrentPlayer,
-            HasWinner = victoryConditions.hasWinner,
-            Winner = victoryConditions.winner,
-            WinningSquares = victoryConditions.winningSquares,
-            HasNextMove = victoryConditions.hasNextMove
-        };
-        var jsonString = JsonSerializer.Serialize(context);
-
+        var jsonString = JsonSerializer.Serialize(GameState);
         return jsonString;
     }
 

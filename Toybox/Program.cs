@@ -15,6 +15,7 @@ public class Program
 
     public static void Main(string[] args)
     {
+        
         var game1 = new Game();
         var game2 = new Game();
         var guid1 = game1.SessionId;
@@ -31,7 +32,19 @@ public class Program
         HandleRequest(guid1, 6);
         HandleRequest(guid2, 2);
         HandleRequest(guid1, 5);
+        var sessionManager = new SessionManager();
+        var ctx1 = sessionManager.NewGame();
+        var ctx2 = sessionManager.NewGame();
+        var sess1 = ctx1.SessionId;
+        var sess2 = ctx2.SessionId;
+        sessionManager.UpdateGame(sess1, 4);
+        sessionManager.UpdateGame(sess2, 1);
+        sessionManager.UpdateGame(sess1, 1);
+        sessionManager.UpdateGame(sess2, 7);
+        sessionManager.UpdateGame(sess1, 2);
+        sessionManager.UpdateGame(sess1, 5);
+        sessionManager.UpdateGame(sess1, 6);
 
-        var ctx = new Context();
+
     }
 }
