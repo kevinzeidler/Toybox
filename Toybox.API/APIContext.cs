@@ -1,13 +1,13 @@
 namespace Toybox.API;
 
 using System.Text.Json.Serialization;
+using ToyBox;
 
-
-public class Context
+public class APIContext
 {
     
 
-    public Context(string sessionId, char[] boardState, int gameState, char? currentPlayer, bool hasWinner,
+    public APIContext(string sessionId, char[] boardState, int gameState, char? currentPlayer, bool hasWinner,
         char? winner, int[]? winningSquares, bool hasNextMove)
     {
         SessionId = sessionId;
@@ -20,10 +20,18 @@ public class Context
         HasNextMove = hasNextMove;
     }
 
-    public Context()
+    public APIContext(Context gameContext)
     {
-        SessionId = "aaaaaaaaa";
+        SessionId = gameContext.SessionId;
+        BoardState = gameContext.BoardState;
+        GameState = gameContext.GameState;
+        CurrentPlayer = gameContext.CurrentPlayer;
+        HasWinner = gameContext.HasWinner;
+        Winner = gameContext.Winner;
+        WinningSquares = gameContext.WinningSquares;
+        HasNextMove = gameContext.HasNextMove;
     }
+
 
     [JsonPropertyName("session_id")] public string SessionId { get; set; }
 
