@@ -38,8 +38,8 @@ public class Game
         get
         {
             if (turnNumber % 2 == 0)
-                return 'X';
-            return 'O';
+                return board.Player2;
+            return board.Player1;
         }
     }
 

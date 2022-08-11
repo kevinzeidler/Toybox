@@ -24,7 +24,8 @@ public class GameTest
 
         var stringRepr = game.ToString();
 
-        Assert.Equal("   \n   \n   \n", stringRepr);
+        Assert.StartsWith("{\"session_id\":\"", stringRepr);
+        Assert.Contains("\"board_state\":[\" \",\" \",\" \",\" \",\" \",\" \",\" \",\" \",\" \"],", stringRepr);
     }
 
     [Fact]

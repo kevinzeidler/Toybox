@@ -1,6 +1,7 @@
+namespace Toybox.API;
+
 using System.Text.Json.Serialization;
 
-namespace ToyBox;
 
 public class Context
 {
@@ -17,6 +18,11 @@ public class Context
         Winner = winner;
         WinningSquares = winningSquares;
         HasNextMove = hasNextMove;
+    }
+
+    public Context()
+    {
+        throw new NotImplementedException();
     }
 
     [JsonPropertyName("session_id")] public string SessionId { get; set; }

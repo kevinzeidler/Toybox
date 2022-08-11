@@ -12,8 +12,9 @@ public class BoardTest
         // act
         var stringRepr = emptyBoard.ToString();
         var gridRepr = emptyBoard.ToList();
-        // asser
-        Assert.Equal(turnNumber, 0);
+        // asserr
+        Assert.All<char>(emptyBoard.state, state => Assert.Equal(emptyBoard.Empty, state));
+        Assert.Equal(1, turnNumber);
         Assert.Equal(11, stringRepr.Length);
         Assert.Equal(3, gridRepr.Count);
         Assert.Equal(emptyBoard.Empty, topLeft);
@@ -46,7 +47,7 @@ public class BoardTest
     }
 
     [Fact]
-    public void CanInitializeInProgressGameFromString()
+    public void CanInitializeInProgressGameFromCharArray()
     {
         var board = new Board();
         var desiredState = new[]
@@ -60,4 +61,6 @@ public class BoardTest
 
         Assert.Equal(9, occupiedBoard.TurnNumber);
     }
+    
+   
 }
