@@ -16,6 +16,7 @@ public class GameTest
         Assert.Equal(gameBoard.Empty, gameBoard[0]);
         //Array.ForEach(gameBoard, (x) => Assert.Equal(gameBoard.Empty, x));
     }
+    
 
     [Fact]
     public void HasStringRepresentation()
@@ -50,23 +51,18 @@ public class GameTest
         Assert.Equal('X', game.board[0]);
         Assert.Equal('O', game.board[1]);
     }
-    //
-    // [Fact]
-    // public void CheckHasWinnerLogic()
-    // {
-    //     var game = new Game();
-    //     var xWinStatePreWinCondition = game.hasWon('X');
-    //     var oWinStatePreWinCondition = game.hasWon('O');
-    //     game.MakeMove(0);
-    //     game.MakeMove(1);
-    //     game.MakeMove(3);
-    //     game.MakeMove(2);
-    //     game.MakeMove(6);
-    //     var xWinStatePostWinCondition = game.hasWon('X');
-    //     var oWinStatePostWinCondition = game.hasWon('O');
-    //     Assert.False(xWinStatePreWinCondition);
-    //     Assert.False(oWinStatePreWinCondition);
-    //     Assert.False(oWinStatePostWinCondition);
-    //     Assert.True(xWinStatePostWinCondition);
-    // }
+    [Fact]
+    public void CanInitializeInProgressGameFromContext()
+    {
+        var game = new Game();
+        game.MakeMove(0);
+        game.MakeMove(1);
+        var savedState = game.GameState;
+
+        var resumedGame = new Game(savedState);
+        Assert.Equal('X', resumedGame.board[0]);
+        Assert.Equal('O', resumedGame.board[1]);
+        Assert.Equal(game.SessionId, resumedGame.SessionId);
+        
+    }
 }

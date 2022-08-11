@@ -19,6 +19,22 @@ public class BoardTest
         Assert.Equal(3, gridRepr.Count);
         Assert.Equal(emptyBoard.Empty, topLeft);
     }
+    [Fact]
+    public void CanSerializeToString()
+    {
+        var emptyBoard = new Board();
+        var repr = emptyBoard.ToString();
+        Assert.NotEmpty(repr);
+    }
+
+    [Fact]
+    public void CanResumeInProgressGame()
+    {
+        var state = new char[] { ' ', ' ', 'X', ' ', 'O', 'X', ' ', ' ', 'O' };
+        var board = new Board(state);
+        Assert.Equal(state, board.state);
+        
+    }
 
     [Fact]
     public void HasArraylikeInterface()
@@ -28,6 +44,12 @@ public class BoardTest
         var oToken = board.Player2;
         var empty = board.Empty;
         var notTheBoard = board.ToList();
+        var enumeratedItems = new List<char> ();
+        foreach (char enumeratedItem in board)
+        {
+            enumeratedItems.Add(enumeratedItem); 
+            
+        }
 
 
         board[4] = xToken;
@@ -40,6 +62,7 @@ public class BoardTest
         var row1 = gridState2D[0];
         var row2 = gridState2D[1];
         var row3 = gridState2D[2];
+        Assert.Equal(9, enumeratedItems.Count);
         Assert.Equal(5, turnNumberAfterAssignments);
         Assert.Equal(new[] { oToken, xToken, empty }, row1);
         Assert.Equal(new[] { empty, xToken, empty }, row2);

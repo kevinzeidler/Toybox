@@ -23,7 +23,7 @@ public class Context
 
     [JsonPropertyName("board_state")] public char[] BoardState { get; set; }
 
-    [JsonPropertyName("round")] public int TurnNumber { get; set; }
+    [JsonPropertyName("round")] public int TurnNumber { get; }
 
     [JsonPropertyName("game_state")] public int GameState { get; set; }
 
@@ -36,9 +36,4 @@ public class Context
     [JsonPropertyName("has_winner")] public bool HasWinner { get; set; }
 
     [JsonPropertyName("winning_squares")] public int[]? WinningSquares { get; set; }
-
-    [JsonPropertyName("selection_history")]
-    public (char, int)[] SelectionHistory { get; set; }
-
-    [JsonPropertyName("selected_square")] public int? SelectedSquare { get; set; }
 }
