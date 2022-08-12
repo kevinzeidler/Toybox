@@ -1,0 +1,131 @@
+{
+	"info": {
+		"_postman_id": "96d9b862-48b4-409d-a3e0-fac8cd8aa1f6",
+		"name": "Toybox.API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22796108"
+	},
+	"item": [
+		{
+			"name": "api/v1",
+			"item": [
+				{
+					"name": "/api/v1/tictactoe",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "text/plain"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/tictactoe",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"tictactoe"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/tictactoe",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"tictactoe"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "[\n  {\n    \"session_id\": \"<string>\",\n    \"board_state\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"round\": \"<integer>\",\n    \"game_state\": \"<integer>\",\n    \"current_player\": \"<string>\",\n    \"winning_player\": \"<string>\",\n    \"has_next_move\": \"<boolean>\",\n    \"has_winner\": \"<boolean>\",\n    \"winning_squares\": [\n      \"<integer>\",\n      \"<integer>\"\n    ],\n    \"selected_square\": \"<integer>\"\n  },\n  {\n    \"session_id\": \"<string>\",\n    \"board_state\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"round\": \"<integer>\",\n    \"game_state\": \"<integer>\",\n    \"current_player\": \"<string>\",\n    \"winning_player\": \"<string>\",\n    \"has_next_move\": \"<boolean>\",\n    \"has_winner\": \"<boolean>\",\n    \"winning_squares\": [\n      \"<integer>\",\n      \"<integer>\"\n    ],\n    \"selected_square\": \"<integer>\"\n  }\n]"
+						},
+
+					]
+				},
+				{
+					"name": "/api/v1/weather_forecast",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "text/plain"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/weather_forecast",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"weather_forecast"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/weather_forecast",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"weather_forecast"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "[\n  {\n    \"date\": \"<dateTime>\",\n    \"temperatureC\": \"<integer>\",\n    \"temperatureF\": \"<integer>\",\n    \"summary\": \"<string>\"\n  },\n  {\n    \"date\": \"<dateTime>\",\n    \"temperatureC\": \"<integer>\",\n    \"temperatureF\": \"<integer>\",\n    \"summary\": \"<string>\"\n  }\n]"
+						}
+					]
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "/",
+			"type": "string"
+		}
+	]
+}
