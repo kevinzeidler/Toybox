@@ -59,7 +59,7 @@ public class Game
             var victoryConditions = HasWinner();
             var context = new Context(sessionId: SessionId, boardState: board.state, 1, currentPlayer: CurrentPlayer,
                 hasWinner: victoryConditions.hasWinner, winner: victoryConditions.winner,
-                winningSquares: victoryConditions.winningSquares, hasNextMove: victoryConditions.hasNextMove);
+                winningSquares: victoryConditions.winningSquares, hasNextMove: victoryConditions.hasNextMove, stringRepr: boardString);
             return context;
         }
     }
@@ -73,7 +73,7 @@ public class Game
 
     public bool CanGo(int index)
     {
-        return GameState.HasNextMove && board[index] == board.Empty;
+        return GameState.HasNextMove && index < board.Length && board[index] == board.Empty;
     }
 
     public string MakeMove(int index)

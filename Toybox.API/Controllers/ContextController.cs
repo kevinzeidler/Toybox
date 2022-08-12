@@ -35,7 +35,7 @@ public class ContextController : Controller
         return response;
     }
     
-    [HttpPost("games/create" )]
+    [HttpPost("games" )]
     public APIContext CreateGame()
     {
         var ctx = _sessions.NewGame();
@@ -43,6 +43,7 @@ public class ContextController : Controller
         return response;
         
     }
+    
     [HttpGet(template: "games/{sessionId}")]
     public APIContext GetGame(string sessionId)
     {
@@ -55,7 +56,47 @@ public class ContextController : Controller
         }
         catch (KeyNotFoundException)
         {
-            throw new BadHttpRequestException("Game not found", 404);
+            throw new BadHttpRequestException(string.Concat("Invalid session ID: ", sessionId), 400);
         }
     }
+    
+    [HttpPut(template: "games/{sessionId}/{selectedTile}")]
+    public APIContext UpdateGame(string sessionId, int selectedTile)
+    {
+        try
+        {
+            var fetched = _sessions[sessionId];
+            if (!fetched.CanGo(selectedTile)) {
+                // Concatenate the selected tile to the error message to notify client of invalid move
+                var errorMessage = string.Concat("Invalid selection: ", selectedTile.ToString());
+                throw new BadHttpRequestException(message: errorMessage, 400);
+            }
+            
+            fetched.MakeMove(selectedTile);
+            var response = new APIContext(fetched.GameState);
+
+            return response;
+        }
+        catch (KeyNotFoundException)
+        {
+            throw new BadHttpRequestException(string.Concat("Invalid session ID: ", sessionId), 400);
+        }
+    }
+    [HttpDelete(template: "games")]
+    public void ClearAllSessions()
+    {
+        _sessions.Clear();
+    }
+    
+    [HttpDelete(template: "games/{sessionId}")]
+    public void DeleteSession(string sessionId)
+    {
+        try { _sessions.Remove(sessionId); }
+        catch (KeyNotFoundException) 
+        { 
+            throw new BadHttpRequestException(string.Concat("Invalid session ID: ", sessionId), 400);
+        } 
+    }
+    
+    
 }

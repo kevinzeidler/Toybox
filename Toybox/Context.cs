@@ -7,7 +7,7 @@ public class Context
     
 
     public Context(string sessionId, char[] boardState, int gameState, char? currentPlayer, bool hasWinner,
-        char? winner, int[]? winningSquares, bool hasNextMove)
+        char? winner, int[]? winningSquares, bool hasNextMove, string stringRepr)
     {
         SessionId = sessionId;
         BoardState = boardState;
@@ -17,6 +17,7 @@ public class Context
         Winner = winner;
         WinningSquares = winningSquares;
         HasNextMove = hasNextMove;
+        StringRepr = stringRepr;
     }
 
     [JsonPropertyName("session_id")] public string SessionId { get; set; }
@@ -36,4 +37,6 @@ public class Context
     [JsonPropertyName("has_winner")] public bool HasWinner { get; set; }
 
     [JsonPropertyName("winning_squares")] public int[]? WinningSquares { get; set; }
+    
+    [JsonPropertyName("as_string")] public string? StringRepr { get; set; }
 }
